@@ -8,8 +8,7 @@ void reset_buffer(char *buffer, int len);
 void see_buffer(char *buffer, int len); 
 
 int main(int n, char *argc[]) {
-	puts("Hello from main");
-
+	int wc = 0;
 	char buffer[BUFF_LEN+1];
 	char c;
 	int counter = 0;
@@ -24,6 +23,8 @@ int main(int n, char *argc[]) {
 		}
 
 		see_buffer(buffer, counter);
+		wc = word_count(buffer, counter);
+		printf("word_count: %d \n", wc);
 		reset_buffer(buffer, BUFF_LEN+1);
 		see_buffer(buffer, counter);
 	}
