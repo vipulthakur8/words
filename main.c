@@ -17,16 +17,23 @@ int main(int n, char *argc[]) {
 
 	if (n < 2) {
 		while((c = getchar()) != EOF && counter < BUFF_LEN+1) {
-			//printf("%c\n", c);
+			if (counter == BUFF_LEN) {
+				wc = wc + word_count(buffer, counter);
+				printf("word_count: %d \n", wc);
+				reset_buffer(buffer, BUFF_LEN+1);
+				counter = 0;
+				continue;
+			}
+
 			buffer[counter] = c;								
 			counter++;
 		}
-
-		see_buffer(buffer, counter);
-		wc = word_count(buffer, counter);
+		
+		if (counter != 0) {
+			wc = wc + word_count(buffer, counter);
+			reset_buffer(buffer, BUFF_LEN+1);
+		}
 		printf("word_count: %d \n", wc);
-		reset_buffer(buffer, BUFF_LEN+1);
-		see_buffer(buffer, counter);
 	}
 	
 	return 0;
