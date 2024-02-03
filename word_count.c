@@ -4,6 +4,54 @@
 #include<stdlib.h>
 #include "./word_count.h"
 
+
+void word_counter(FILE *file, int flag) {
+	Token *token_arr = NULL;	
+	char word[CHAR_LIMIT];
+	int count = 0;
+
+
+	while (fscanf(file, "%s", word) == 1) {
+		int found = 0;
+		for (int i = 0; i < count; ++i) {
+			if (strcmp(word, token_arr[i].word) == 0) {
+			//	puts("Inside if block of strcmp");
+				found = 1;
+				token_arr[i].freq++;	
+				break;
+			}
+
+		}
+
+		/* If not found in the array */
+		if (!found) {
+			//puts("Inside the found");
+			token_arr = realloc(token_arr, (count+1)*sizeof(token_arr));
+			strcpy(token_arr[count].word, word);
+			token_arr[count].freq = 1;
+			count++;
+		}
+	}
+
+	int wc = 0;
+	for (int i = 0; i < count; ++i) {
+		wc += token_arr[i].freq;
+	}
+
+	printf("word count is %d\n", wc);
+	
+	if (flag == 1) {
+		//printf("Frequency\tWord\n");	
+		for (int i = 0; i < count; ++i) {
+			printf("%d\t%s\n", token_arr[i].freq, token_arr[i].word);	
+		}
+	}
+
+	free(token_arr);
+	
+}
+
+/*
 WordCount *word_count(char string[], int len) {
 	//int wc = 0;	
 	static WordCount wc;
@@ -36,6 +84,7 @@ WordCount *word_count(char string[], int len) {
 
 void freq_counter(WordCount *wc, char subStr[], int n) {
 	WordCount *ptr = wc;
+	Word *w = NULL;
 	if (ptr->words_freq == NULL) {
 		Word *w = NULL; 
 		w = (Word*)malloc(sizeof(Word));	
@@ -45,7 +94,6 @@ void freq_counter(WordCount *wc, char subStr[], int n) {
 		ptr->words_freq = w;
 	}
 	else {
-		Word *w = NULL;
 		Word *tracker = NULL;
 		tracker = ptr->words_freq;
 		while (tracker->next_word != NULL) {
@@ -62,3 +110,5 @@ void freq_counter(WordCount *wc, char subStr[], int n) {
 		tracker->next_word = w;
 	}
 }
+
+*/

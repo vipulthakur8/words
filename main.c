@@ -1,8 +1,29 @@
 # include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 # include "word_count.h"
 
 #define BUFF_LEN 1000
 
+
+int main(int argc, char argv[]) {
+	FILE *file;	
+
+	if (argc > 1) {
+		puts("Hello from argc > 1 block");	
+	}
+	else {
+		file = stdin;
+		word_counter(file, 1);
+	}
+
+	if (file != stdin) {
+		free(file);
+	}
+
+	return 0; }
+
+/* 
 void reset_buffer(char *buffer, int len); 
 
 void see_buffer(char *buffer, int len); 
@@ -16,6 +37,8 @@ int main(int n, char *argc[]) {
 	char c;
 	int counter = 0;
 
+	Word *wd = NULL;
+	
 	reset_buffer(buffer, BUFF_LEN+1);
 
 	if (n < 2) {
@@ -76,3 +99,4 @@ void see_word_frequency(WordCount *words) {
 	}
 	printf("%s\t%d\n", ptr->word, ptr->freq);
 }
+*/
