@@ -6,8 +6,11 @@
 void reset_buffer(char *buffer, int len); 
 
 void see_buffer(char *buffer, int len); 
+ 
+void see_word_frequency(WordCount *words);
 
 int main(int n, char *argc[]) {
+	WordCount *words;
 	int wc = 0;
 	char buffer[BUFF_LEN+1];
 	char c;
@@ -18,7 +21,9 @@ int main(int n, char *argc[]) {
 	if (n < 2) {
 		while((c = getchar()) != EOF && counter < BUFF_LEN+1) {
 			if (counter == BUFF_LEN) {
-				wc = wc + word_count(buffer, counter);
+				words = word_count(buffer, counter);
+				//wc = wc + word_count(buffer, counter).total_wc;
+				wc = wc + words->total_wc;
 				printf("word_count: %d \n", wc);
 				reset_buffer(buffer, BUFF_LEN+1);
 				counter = 0;
@@ -30,11 +35,16 @@ int main(int n, char *argc[]) {
 		}
 		
 		if (counter != 0) {
-			wc = wc + word_count(buffer, counter);
+		//	wc = wc + word_count(buffer, counter);
+			words = word_count(buffer, counter);
+			wc = wc + words->total_wc;
 			reset_buffer(buffer, BUFF_LEN+1);
 		}
 		printf("word_count: %d \n", wc);
 	}
+
+	see_word_frequency(words);
+
 	
 	return 0;
 }
@@ -56,4 +66,13 @@ void see_buffer(char *buffer, int len) {
 		temp++;
 	}
 	puts("");
+}
+
+void see_word_frequency(WordCount *words) {
+	Word *ptr = words->words_freq;
+	while (ptr->next_word != NULL) {
+		printf("%s\t%d\n", ptr->word, ptr->freq);
+		ptr = ptr->next_word;
+	}
+	printf("%s\t%d\n", ptr->word, ptr->freq);
 }
