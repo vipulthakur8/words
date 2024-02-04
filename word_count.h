@@ -10,27 +10,8 @@ typedef struct token {
 	char word[CHAR_LIMIT];
 } Token;
 
-typedef struct word {
-	char word[20];
-	int freq;
-	struct word *next_word;
-} Word;
-
-typedef struct word_count {
-	int total_wc;
-	Word *words_freq;
-} WordCount;
-
 void word_counter(FILE *file, int flag);
 
-WordCount *word_count(char string[], int len);
-
-void freq_counter(WordCount *wc, char subStr[], int n);
-
-int wordcount_sort(char string[], int len);
-
-int wordcount_less();
-
-extern Word *wd;
+void reset_word(char word[], int len);
 
 #endif
